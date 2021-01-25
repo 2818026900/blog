@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    druid:
+      ###########################################################
+      ####                  配置MySql基本连接                 #####
+      ###########################################################
+      url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 191228qwert@lmy@LMY
+      platform: mysql
+      type: com.alibaba.druid.pool.DruidDataSource
+      ###########################################################
+      ####                  配置druid连接池                   #####
+      ###########################################################
+      initial-size: 20 #初始化时建立物理连接的个数
+      max-active: 20 #最大连接池数量
+      max-wait: 60000 #获取连接等待最大时间
+      min-idle: 1 #最小连接池数量
+      time-between-eviction-runs-mills: 60000
+      #有两个含义： 1) Destroy线程会检测连接的间隔时间，如果连接空闲时间大于等于minEvictableIdleTimeMillis则关闭物理连接。 2) testWhileIdle的判断依据，详细看testWhileIdle属性的说明
+      min-evictable-idle-time-millis: 300000 #连接保持空闲而不被驱逐的最小时间
+      test-while-idle: true #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-on-borrow: true #申请连接时执行validationQuery检测连接是否有效
+      test-on-return: false #归还连接时执行validationQuery检测连接是否有效
+      validation-query: SELECT '1' #用来检测连接是否有效的sql，要求是一个查询语句
+      validation-query-timeout: 500 #检测连接是否有效的超时时间
+      filters: stat,log4j,wall #监控统计用的filter:stat 日志用的filter:log4j 防御sql注入的filter:wall
+  jpa:
+    database: MYSQL #配置 DBMS 类型
+    show-sql: true #配置是否将执行的 SQL 输出到日志
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update #配置开启自动更新表结构
